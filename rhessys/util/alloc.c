@@ -2,10 +2,10 @@
 /*								 								*/
 /*		alloc.c													*/
 /*																*/
-/*	alloc.c - attempts to alloacte a portion of ram				*/
+/*	alloc.c - attempts to allocate a portion of ram				*/
 /*																*/
 /*	NAME														*/
-/*	alloc.c - attempts to alloacte a portion of ram				*/
+/*	alloc.c - attempts to allocate a portion of ram				*/
 /*																*/
 /*	SYNOPSIS													*/
 /*	void	*alloc( size_t, char*, char* )						*/

@@ -10,7 +10,7 @@
 /*  void compute_N_absorbed(int					*/
 /*					double	,		*/
 /*					double	,		*/
-/*					double	,		*/
+/*					double	, 		*/
 /*					double	,		*/
 /*					double);		*/
 /*                                                              */

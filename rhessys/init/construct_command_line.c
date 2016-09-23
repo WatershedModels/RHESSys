@@ -24,7 +24,7 @@
 /*																*/
 /*	Original code, January 15, 1996.							*/
 /*	valid_option to be written still - determines if the next	*/
-/*			arguement is a valid option.						*/
+/*			argument is a valid option.			     			*/
 /*	added routing option - May 7, 1997, C.Tague					*/
 /*																*/
 /*																*/
@@ -129,7 +129,7 @@ struct	command_line_object	*construct_command_line(
 	command_line[0].snow_scale_tol = 999999999;
 	
 	/*-------------------------------------------------*/
-	/* Loop through each arguement in the command line.*/
+	/* Loop through each argument in the command line. */
 	/*-------------------------------------------------*/
 	i = 1;
 	while  ( i < main_argc){
@@ -146,7 +146,7 @@ struct	command_line_object	*construct_command_line(
 		if ( i< main_argc ){
 			if ( strcmp(main_argv[i],"-v") == 0 ){
 				/*-----------------------------------------------*/
-				/*			Check if "-v" was the last agruement.   */
+				/*			Check if "-v" was the last agreement */
 				/*-----------------------------------------------*/
 				i++;
 				if ( i == main_argc ){
@@ -157,7 +157,7 @@ struct	command_line_object	*construct_command_line(
 				}
 				else if ( valid_option(main_argv[i]) == 1 ){
 					/*----------------------------------------------*/
-					/*	check if the next arguement is an option.		*/
+					/*	check if the next argument is an option.    */
 					/*----------------------------------------------*/
 					command_line[0].verbose_flag= 1;
 				}
@@ -286,8 +286,8 @@ struct	command_line_object	*construct_command_line(
 				command_line[0].vegspinup_flag = 1;
 				i++;
      
-      	/*--------------------------------------------------------------*/
-				/*			Read in the vegspinup file name.						          	*/
+      	        /*--------------------------------------------------------------*/
+				/*			Read in the vegspinup file name.					*/
 				/*--------------------------------------------------------------*/
 				strncpy(command_line[0].vegspinup_filename, main_argv[i], FILEPATH_LEN);
 				i++;
@@ -302,7 +302,7 @@ struct	command_line_object	*construct_command_line(
 				command_line[0].gwtoriparian_flag = 1;
 			}/* end if */
 			/*-------------------------------------------------*/
-			/*	groundwater flag and coeffcients	  */
+			/*	groundwater flag and coefficients          	   */
 			/*-------------------------------------------------*/
 			else if ( strcmp(main_argv[i],"-gw") == 0 ){
 				i++;
@@ -450,7 +450,7 @@ struct	command_line_object	*construct_command_line(
 			} /* end if */
 
 			/*-----------------------------------------------------------*/
-			/*alternatively use pore size inidex and psi air entry				*/
+			/*alternatively use pore size index and psi air entry	 	 */
 			/*-----------------------------------------------------------*/
 			else if ( strcmp(main_argv[i],"-svalt") == 0 ){
 				i++;
@@ -511,7 +511,7 @@ struct	command_line_object	*construct_command_line(
 			else if ( strcmp(main_argv[i],"-st") == 0 ){
 				command_line[0].start_flag = 1;
 				/*-------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.	     */
 				/*-------------------------------------------------------*/
 				i++;
 				if ((i == main_argc) || (valid_option(main_argv[i])==1)){
@@ -523,7 +523,7 @@ struct	command_line_object	*construct_command_line(
 				/*-------------------------------------------------*/
 				command_line[0].start_date.year = (int)atoi(main_argv[i]);
 				/*--------------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*--------------------------------------------------------------*/
 				i++;
 				if ((i == main_argc) || (valid_option(main_argv[i])==1)){
@@ -535,7 +535,7 @@ struct	command_line_object	*construct_command_line(
 				/*--------------------------------------------------------------*/
 				command_line[0].start_date.month = (int)atoi(main_argv[i]);
 				/*--------------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*--------------------------------------------------------------*/
 				i++;
 				if (  (i == main_argc) || (valid_option(main_argv[i])==1)){
@@ -547,7 +547,7 @@ struct	command_line_object	*construct_command_line(
 				/*--------------------------------------------------------------*/
 				command_line[0].start_date.day = (int)atoi(main_argv[i]);
 				/*--------------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*--------------------------------------------------------------*/
 				i++;
 				if ((i == main_argc) || (valid_option(main_argv[i])==1)){
@@ -566,7 +566,7 @@ struct	command_line_object	*construct_command_line(
 			else if ( strcmp(main_argv[i],"-ed") == 0 ){
 				command_line[0].end_flag = 1;
 				/*--------------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*--------------------------------------------------------------*/
 				i++;
 				if ((i == main_argc) || (valid_option(main_argv[i])==1)){
@@ -578,7 +578,7 @@ struct	command_line_object	*construct_command_line(
 				/*--------------------------------------------------------------*/
 				command_line[0].end_date.year = (int)atoi(main_argv[i]);
 				/*--------------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*--------------------------------------------------------------*/
 				i++;
 				if ((i == main_argc) || (valid_option(main_argv[i])==1)){
@@ -590,7 +590,7 @@ struct	command_line_object	*construct_command_line(
 				/*--------------------------------------------------------------*/
 				command_line[0].end_date.month = (int)atoi(main_argv[i]);
 				/*--------------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*--------------------------------------------------------------*/
 				i++;
 				if ((i == main_argc) || (valid_option(main_argv[i])==1)){
@@ -602,7 +602,7 @@ struct	command_line_object	*construct_command_line(
 				/*--------------------------------------------------------------*/
 				command_line[0].end_date.day = (int)atoi(main_argv[i]);
 				/*--------------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*--------------------------------------------------------------*/
 				i++;
 				if ((i == main_argc) || (valid_option(main_argv[i])==1)){
@@ -620,7 +620,7 @@ struct	command_line_object	*construct_command_line(
 			/*--------------------------------------------------------------*/
 			else if ( strcmp(main_argv[i],"-r") == 0 ){
 				/*--------------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*--------------------------------------------------------------*/
 				i++;
 				if ((i == main_argc) || (valid_option(main_argv[i])==1) ){
@@ -649,7 +649,7 @@ struct	command_line_object	*construct_command_line(
 			/*--------------------------------------------------------------*/
 			else if ( strcmp(main_argv[i],"-str") == 0 ){
 				/*--------------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*--------------------------------------------------------------*/
 				i++;
 				if ((i == main_argc) || (valid_option(main_argv[i])==1) ){
@@ -670,7 +670,7 @@ struct	command_line_object	*construct_command_line(
 			/*--------------------------------------------------------------*/
 			else if ( strcmp(main_argv[i],"-res") == 0 ){
 				/*--------------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*--------------------------------------------------------------*/
 				i++;
 				if ((i == main_argc) || (valid_option(main_argv[i])==1) ){
@@ -691,7 +691,7 @@ struct	command_line_object	*construct_command_line(
 			/*--------------------------------------------------------------*/
 			else if ( strcmp(main_argv[i],"-rddn") == 0 ){
 				/*--------------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*--------------------------------------------------------------*/
 				i++;
 				if ((i == main_argc) || (valid_option(main_argv[i])==1) ){
@@ -712,7 +712,7 @@ struct	command_line_object	*construct_command_line(
 			/*--------------------------------------------------------------*/
 			else if ( strcmp(main_argv[i],"-w") == 0 ){
 				/*--------------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*--------------------------------------------------------------*/
 				i++;
 				if ((i == main_argc) || (valid_option(main_argv[i])==1) ){
@@ -750,7 +750,7 @@ struct	command_line_object	*construct_command_line(
 			/*--------------------------------------------------------------*/
 			else if( strcmp(main_argv[i],"-t") == 0 ){
 				/*--------------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*--------------------------------------------------------------*/
 				i++;
 				if ((i == main_argc) || (valid_option(main_argv[i])==1) ){
@@ -769,7 +769,7 @@ struct	command_line_object	*construct_command_line(
 			/*--------------------------------------------------------------*/
 			else if( strcmp(main_argv[i],"-pre") == 0 ){
 				/*--------------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*--------------------------------------------------------------*/
 				i++;
 				if ((i == main_argc) || (valid_option(main_argv[i])==1)){
@@ -787,24 +787,24 @@ struct	command_line_object	*construct_command_line(
 				command_line[0].prefix_flag = 1;
 				i++;
 			}/*end if*/
-                        /*--------------------------------------------------------------*/
-			/*		Check if the stream_routing output flag is next.    				*/
+            /*--------------------------------------------------------------*/
+			/*		Check if the stream_routing output flag is next.    	*/
 			/*--------------------------------------------------------------*/
 			else if( strcmp(main_argv[i],"-stro") == 0 ){
 				/*--------------------------------------------------------------*/
-				/*			Allocate the stream_routing output specifier.				*/
+				/*			Allocate the stream_routing output specifier.		*/
 				/*--------------------------------------------------------------*/
 				command_line[0].stro = (struct stro_option *)
 					alloc(sizeof(struct stro_option), "stro","construct_command_line" );
 				command_line[0].stro[0].reachID 	= -999;
 				
 				/*--------------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*--------------------------------------------------------------*/
 				i++;
 				if (i < main_argc){
 					/*----------------------------------------------*/
-					/*Check that the next arguement is a reachID		*/
+					/*Check that the next argument is a reachID		*/
 					/*----------------------------------------------*/
 					if ( valid_option(main_argv[i]) == 0){
 						command_line[0].stro[0].reachID = (int)atoi(main_argv[i]);
@@ -813,7 +813,7 @@ struct	command_line_object	*construct_command_line(
 				} /*end if*/
 			} /*end if*/
 			
-                        /*--------------------------------------------------------------*/
+            /*--------------------------------------------------------------*/
 			/*		Check if the basin output flag is next.    				*/
 			/*--------------------------------------------------------------*/
 			else if( strcmp(main_argv[i],"-b") == 0 ){
@@ -825,12 +825,12 @@ struct	command_line_object	*construct_command_line(
 				command_line[0].b[0].basinID 	= -999;
                                
 				/*--------------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*--------------------------------------------------------------*/
 				i++;
 				if (i < main_argc){
 					/*----------------------------------------------*/
-					/*Check that the next arguement is a basinID		*/
+					/*Check that the next argument is a basinID		*/
 					/*----------------------------------------------*/
 					if ( valid_option(main_argv[i]) == 0){
 						command_line[0].b[0].basinID = (int)atoi(main_argv[i]);
@@ -839,33 +839,33 @@ struct	command_line_object	*construct_command_line(
 				} /*end if*/
 			} /*end if*/
 			/*----------------------------------------------------------*/
-			/*		Check if the hillslope output flag is next.  			*/
+			/*		Check if the hillslope output flag is next.  		*/
 			/*----------------------------------------------------------*/
 			else if( strcmp(main_argv[i],"-h") == 0 ){
 				/*-------------------------------------------------------*/
-				/*			Allocate the hillslope output specifier.			*/
+				/*			Allocate the hillslope output specifier.	 */
 				/*-------------------------------------------------------*/
 				command_line[0].h = (struct h_option *)
 					alloc(sizeof(struct h_option), "h", "construct_command_line" );
 				command_line[0].h[0].basinID 	= -999;
 				command_line[0].h[0].hillID 	= -999;
 				/*-------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*-------------------------------------------------------*/
 				i++;
 				if ( i < main_argc ){
 					/*--------------------------------------------------------------*/
-					/*				Check that the next arguement is a basinID		*/
+					/*				Check that the next argument is a basinID		*/
 					/*--------------------------------------------------------------*/
 					if ( valid_option(main_argv[i]) == 0 ){
 						command_line[0].h[0].basinID = (int)atoi(main_argv[i]);
 						i++;
 						/*-------------------------------------------------------*/
-						/*		Check that the next arguement exists.		*/
+						/*		Check that the next argument exists.		*/
 						/*-------------------------------------------------------*/
 						if (  i < main_argc ){
 							/*-------------------------------------------*/
-							/*	Check that the next arguement is hillID	*/
+							/*	Check that the next argument is hillID	*/
 							/*-------------------------------------------*/
 							if ( valid_option(main_argv[i]) == 0 ){
 								command_line[0].h[0].hillID = (int)atoi(main_argv[i]);
@@ -876,11 +876,11 @@ struct	command_line_object	*construct_command_line(
 				} /*end if*/
 			} /*end if*/
 			/*-------------------------------------------------------*/
-			/*		Check if the zone output flag is next.  				*/
+			/*		Check if the zone output flag is next.  		 */
 			/*-------------------------------------------------------*/
 			else if( strcmp(main_argv[i],"-z") == 0 ){
 				/*----------------------------------------------------*/
-				/*			Allocate the zone output specifier.				*/
+				/*			Allocate the zone output specifier.		  */
 				/*----------------------------------------------------*/
 				command_line[0].z = (struct z_option *)
 					alloc(sizeof(struct z_option), "z", "construct_command_line");
@@ -888,32 +888,32 @@ struct	command_line_object	*construct_command_line(
 				command_line[0].z[0].hillID 	= -999;
 				command_line[0].z[0].zoneID 	= -999;
 				/*-------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.		 */
 				/*-------------------------------------------------------*/
 				i++;
 				if (  i < main_argc ){
 					/*----------------------------------------------------------*/
-					/*				Check that the next arguement is a basinID		*/
+					/*				Check that the next argument is a basinID	*/
 					/*----------------------------------------------------------*/
 					if ( valid_option(main_argv[i]) == 0 ){
 						command_line[0].z[0].basinID = (int)atoi(main_argv[i]);
 						i++;
 						/*-------------------------------------------------------*/
-						/*					Check that the next arguement exists.		*/
+						/*					Check that the next argument exists. */
 						/*-------------------------------------------------------*/
 						if (  i < main_argc ){
 							/*----------------------------------------------------*/
-							/*  			Check that the next arguement is hillID	*/
+							/*  			Check that the next argument is hillID*/
 							/*----------------------------------------------------*/
 							if ( valid_option(main_argv[i]) == 0 ){
 								command_line[0].z[0].hillID = (int)atoi(main_argv[i]);
 								i++;
 								/*----------------------------------------------------*/
-								/*			Check that the next arguement exists.	*/
+								/*			Check that the next argument exists.	  */
 								/*----------------------------------------------------*/
 								if (  i < main_argc ){
 									/*-------------------------------------------------*/
-									/*				Check that the next arg is a zoneID	*/
+									/*			Check that the next arg is a zoneID	   */
 									/*-------------------------------------------------*/
 									if ( valid_option(main_argv[i]) == 0 ){
 										command_line[0].z[0].zoneID=(int)atoi(main_argv[i]);
@@ -939,42 +939,42 @@ struct	command_line_object	*construct_command_line(
 				command_line[0].p[0].zoneID 	= -999;
 				command_line[0].p[0].patchID 	= -999;
 				/*--------------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*--------------------------------------------------------------*/
 				i++;
 				if (  i < main_argc ){
 					/*--------------------------------------------------------------*/
-					/*				Check that the next arguement is a basinID		*/
+					/*				Check that the next argument is a basinID		*/
 					/*--------------------------------------------------------------*/
 					if ( valid_option(main_argv[i]) == 0 ){
 						command_line[0].p[0].basinID = (int)atoi(main_argv[i]);
 						i++;
 						/*-------------------------------------------------------*/
-						/*					Check that the next arguement exists.		*/
+						/*				Check that the next argument exists.	 */
 						/*-------------------------------------------------------*/
 						if (  i < main_argc ){
 							/*-------------------------------------------------------*/
-							/*		  			Check that the next arguement is hillID	*/
+							/*		  		Check that the next argument is hillID	 */
 							/*-------------------------------------------------------*/
 							if ( valid_option(main_argv[i]) == 0){
 								command_line[0].p[0].hillID = (int)atoi(main_argv[i]);
 								i++;
 								/*----------------------------------------------------*/
-								/*	  Check that the next arguement exists.				*/
+								/*	  Check that the next argument exists.			  */
 								/*----------------------------------------------------*/
 								if (  i < main_argc ){
 									/*----------------------------------------------*/
-									/* 				Check that next arg is a zoneID		*/
-									/*-----------------------------------------------*/
+									/* 			Check that next arg is a zoneID		*/
+									/*----------------------------------------------*/
 									if ( valid_option(main_argv[i]) == 0  ){
 										command_line[0].p[0].zoneID = (int)atoi(main_argv[i]);
 										i++;
-										/*--------------------------------------------*/
-										/*			Check that next arguement exists.	*/
+										/*-------------------------------------------*/
+										/*			Check that next argument exists. */
 										/*-------------------------------------------*/
 										if (  i < main_argc ){
-											/*------------------------------------------*/
-											/*			Check next arg is a patchID		*/
+											/*----------------------------------------*/
+											/*			Check next arg is a patchID	  */
 											/*----------------------------------------*/
 											if ( valid_option(main_argv[i]) == 0 ){
 												command_line[0].p[0].patchID =
@@ -1004,28 +1004,28 @@ struct	command_line_object	*construct_command_line(
 				command_line[0].c[0].patchID 	= -999;
 				command_line[0].c[0].stratumID 	= -999;
 				/*--------------------------------------------------------------*/
-				/*			Check that the next arguement exists.				*/
+				/*			Check that the next argument exists.				*/
 				/*--------------------------------------------------------------*/
 				i++;
 				if (  i < main_argc ){
 					/*--------------------------------------------------------------*/
-					/*				Check that the next arguement is a basinID		*/
+					/*				Check that the next argument is a basinID		*/
 					/*--------------------------------------------------------------*/
 					if ( valid_option(main_argv[i]) == 0 ){
 						command_line[0].c[0].basinID = (int)atoi(main_argv[i]);
 						i++;
 						/*--------------------------------------------------------------*/
-						/*					Check that the next arguement exists.		*/
+						/*					Check that the next argument exists.		*/
 						/*--------------------------------------------------------------*/
 						if (  i < main_argc ){
 							/*----------------------------------------------------------*/
-							/*						Check that the next arguement is hillID	*/
+							/*						Check that the next argument is hillID	*/
 							/*----------------------------------------------------------*/
 							if ( valid_option(main_argv[i]) == 0){
 								command_line[0].c[0].hillID = (int)atoi(main_argv[i]);
 								i++;
 								/*-------------------------------------------------------*/
-								/*			Check that the next arguement exists.				*/
+								/*			Check that the next argument exists.				*/
 								/*-------------------------------------------------------*/
 								if (  i < main_argc ){
 									/*----------------------------------------------------*/
@@ -1035,7 +1035,7 @@ struct	command_line_object	*construct_command_line(
 										command_line[0].c[0].zoneID =	(int)atoi(main_argv[i]);
 										i++;
 										/*-------------------------------------------------*/
-										/*				Check that next arguement exists.	*/
+										/*				Check that next argument exists.	*/
 										/*-------------------------------------------------*/
 										if (  i < main_argc ){
 											/*---------------------------------------------*/
@@ -1046,7 +1046,7 @@ struct	command_line_object	*construct_command_line(
 													(int)atoi(main_argv[i]);
 												i++;
 												/*------------------------------------------*/
-												/*		Check that next arguement exists.	*/
+												/*		Check that next argument exists.	*/
 												/*-----------------------------------------*/
 												if (  i < main_argc ){
 													/*----------------------------------------*/
