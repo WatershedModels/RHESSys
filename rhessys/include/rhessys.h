@@ -16,11 +16,11 @@
 /*      DESCRIPTION                                                                                                             */
 /*                                                                                                                              */
 /*      This header represents an amalgamation of header structures                                                             */
-/*      macros and dedinitions of dynamicgc and RHESSys2.0.                                                                     */
+/*      macros and definitions of dynamicgc and RHESSys2.0.                                                                     */
 /*      This file contains the global scope object (variables and                                                               */
 /*      structures) definitions for rhessys4.0.                                                                                 */
 /*                                                                                                                              */
-/*      The objects are structured in the following heirarchy:                                                                  */
+/*      The objects are structured in the following hierarchy:                                                                  */
 /*                                                                                                                              */
 /*                                                                                                                              */
 /*      .world                                                                                                                  */
@@ -77,13 +77,13 @@
 /*                                                                                                                              */
 /*      PROGRAMMER'S NOTES                                                                                                      */
 /*                                                                                                                              */
-/*      The object heirarchy replaces old input, biome and state                                                                */
+/*      The object hierarchy replaces old input, biome and state                                                                */
 /*      variable structures.  No output objects have been defined.                                                              */
 /*      In theory output routines should be defined as members                                                                  */
-/*      of a given object  in the heirarchy.  If an accumulator                                                                 */
+/*      of a given object in the hierarchy.  If an accumulator                                                                  */
 /*      array is also needed it should be added to the object                                                                   */
 /*      at which the level of accumulation is being performed.  It                                                              */
-/*      may be useful to use the lower level object in the heirarchy                                                            */
+/*      may be useful to use the lower level object in the hierarchy                                                            */
 /*      to hold the accumulator values rather than making a custom                                                              */
 /*      version.  This will take a bit more memory but will allow                                                               */
 /*      member functions designed for the lower level object to be                                                              */
@@ -96,19 +96,19 @@
 /*      2.  Vertical hierarchy only represented within a patch.                                                                 */
 /*      3.  Base stations definable for any object.                                                                             */
 /*      4.  Zones replacing elevation intervals.  Zones have                                                                    */
-/*                      homogenous climate forcing above the canopy.                                                            */
-/*      5.      The specification of multiple vertical layers per patch.                                                        */
+/*                      homogeneous climate forcing above the canopy.                                                           */
+/*      5.  The specification of multiple vertical layers per patch.                                                            */
 /*      6.  The addition of an active surface layers to each strata.                                                            */
 /*                      (The layers can be set to 0 if needed).                                                                 */
 /*      7.  The addition of multiple canopy strata (life forms)                                                                 */
 /*                      per layer in a patch.                                                                                   */
-/*      8.      The use of default files which separate biome file data                                                         */
+/*      8.  The use of default files which separate biome file data                                                             */
 /*                      in a spatial hierarchy.                                                                                 */
-/*      9. The use of a world object which has default model                                                                    */
+/*      9.  The use of a world object which has default model                                                                   */
 /*                      control information.  This allows the basin object                                                      */
 /*                      to have only data pertaining to processes.                                                              */
-/*      10.  Provosion of pointers to a grow object at each level                                                               */
-/*                      of the world heirarchy to permit easy addition of                                                       */
+/*      10.  Provision of pointers to a grow object at each level                                                               */
+/*                      of the world hierarchy to permit easy addition of                                                       */
 /*                      dynamicgc canopy growth simulation.                                                                     */
 /*                                                                                                                              */
 /*                                                                                                                              */
@@ -259,7 +259,7 @@ struct world_object
         {
         int             num_base_stations;
         // Since using gridded data will only have a single base station file but
-        // mutliple base stations, the new num_base_stations_files is necessary for
+        // multiple base stations, the new num_base_stations_files is necessary for
         // proper output of a world file when using gridded climate data.                       
         int             num_base_station_files;
         int             num_basin_files;
@@ -297,9 +297,9 @@ struct world_object
         struct  default_object          *defaults;
         struct  world_hourly_object     *hourly;
         struct  fire_object             **fire_grid;
-	struct patch_fire_object **patch_fire_grid;  //mk
-        struct  spinup_thresholds_list_object  *spinup_thresholds ;   
-	struct  date			**master_hourly_date;	
+	    struct  patch_fire_object **patch_fire_grid;  //mk
+        struct  spinup_thresholds_list_object  *spinup_thresholds ;
+	    struct  date			**master_hourly_date;
         };
 
 
@@ -514,7 +514,7 @@ struct basin_object
         int             num_base_stations;
         int             num_hillslopes;
         double  area;                   /*  m2          */
-	      double  area_withsnow;			/*  m2 		*/
+        double  area_withsnow;			/*  m2 		*/
         double  x;                      /*  meters      */      
         double  y;                      /*  meters      */
         double  z;                      /*  meters      */
@@ -912,7 +912,7 @@ struct  zone_default
         };
 
 /*----------------------------------------------------------*/
-/*      accumlator variables for zone_object                    */
+/*      accumulator variables for zone_object               */
 /*----------------------------------------------------------*/
 
 struct accumulate_zone_object
@@ -1023,7 +1023,7 @@ struct  zone_hourly_object
 
 
 /*----------------------------------------------------------*/
-/*      Define grow_zone_object extension.                                              */
+/*      Define grow_zone_object extension.                  */
 /*----------------------------------------------------------*/
 struct  grow_zone_object
         {
@@ -1037,7 +1037,7 @@ struct soil_class
         double clay;    /* 0 to 1 */
         };
 /*----------------------------------------------------------*/
-/*      Define a land use       default object.                                         */
+/*      Define a land use       default object.             */
 /*----------------------------------------------------------*/
 struct  landuse_default 
 {
@@ -1731,7 +1731,7 @@ struct patch_object
         };
 
 /*----------------------------------------------------------*/
-/*      Define the l;ayer object structure.                     */
+/*      Define the layer object structure.                  */
 /*----------------------------------------------------------*/
 struct  layer_object
         {

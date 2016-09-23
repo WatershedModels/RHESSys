@@ -4,14 +4,17 @@
 
 # Build directories
 objects/
-
+bin/
 # Eclipse metadata
 .project
 .cproject
 
 # OS X extended attribute stores
 .DS_Store
+.DS_Store.*
 
 # Editor leftovers
 *~
 
+# CLion metadata
+.idea
