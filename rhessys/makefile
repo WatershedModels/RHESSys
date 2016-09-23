@@ -6,7 +6,9 @@ CFLAGS =-Wall -g -std=c99
 RHESSYS_BIN = /usr/local/bin
 OBJ = objects
 
-OS := $(shell uname)
+ifneq ($(OS), Windows_NT)
+	OS := $(shell uname)
+endif
 
 OBJECTS = \
 $(OBJ)/read_netcdf.o \
@@ -298,23 +300,29 @@ $(OBJ)/reconstruct_hourly_clim.o \
 all:	dir rhessys
 
 dir:
+ifeq ($(OS), Windows_NT)
+ifneq ($(OBJ), $(wildcard $(OBJ)))
+	mkdir $(OBJ)
+endif
+else
 	mkdir -p $(OBJ)
+endif
 
 ifdef netcdf
 ifdef wmfire
 rhessys: $(OBJECTS)
-	$(CC) $(OBJECTS) $(CFLAGS) -I include -lm -lnetcdf -L./lib -lwmfire -v -o $(PGM) 
+	$(CC) $(OBJECTS) $(CFLAGS) -I include -lm -lnetcdf -L./lib -lwmfire -v -o $(PGM)
 else
 rhessys: $(OBJECTS)
-	$(CC) $(OBJECTS) $(CFLAGS) -I include -lm -lnetcdf -v -o $(PGM) 
+	$(CC) $(OBJECTS) $(CFLAGS) -I include -lm -lnetcdf -v -o $(PGM)
 endif
 else
 ifdef wmfire
 rhessys: $(OBJECTS)
-	$(CC) $(OBJECTS) $(CFLAGS) -I include -lm -L./lib -lwmfire -v -o $(PGM) 
+	$(CC) $(OBJECTS) $(CFLAGS) -I include -lm -L./lib -lwmfire -v -o $(PGM)
 else
 rhessys: $(OBJECTS)
-	$(CC) $(OBJECTS) $(CFLAGS) -I include -lm -L./lib -v -o $(PGM) 
+	$(CC) $(OBJECTS) $(CFLAGS) -I include -lm -L./lib -v -o $(PGM)
 endif
 endif
 
@@ -911,18 +919,33 @@ ifeq ($(OS), Darwin)
 	sed -e 's/<<RHESSYS_VERSION>>/$(VERSION)/g' -i '' ./main.c	
 else ifeq ($(OS), Linux)
 	sed -e 's/<<RHESSYS_VERSION>>/$(VERSION)/g' ./main.c
+else ifeq ($(OS), Windows_NT)
+	sed -e "s/<<RHESSYS_VERSION>>/$(VERSION)/g" ./main.c
 else
 	sed -e 's/<<RHESSYS_VERSION>>/$(VERSION)/g' ./main.c
 endif
 
 install:
+ifeq ($(OS), Windows_NT)
+	copy $(PGM) $(RHESSYS_BIN)
+else
 	cp $(PGM) $(RHESSYS_BIN)
+endif
 
 clean:
+ifeq ($(OS), Windows_NT)
+	rmdir /s $(OBJECTS)
+else
 	rm -f $(OBJECTS)
+endif
 
 clobber:
+ifeq ($(OS), Windows_NT)
+	del $(PGM)
+	rmdir /s $(OBJECTS)
+else
 	rm -f $(OBJECTS) $(PGM)
+endif
 
 functest: $(PGM)
 	# Run Python-based functional testing

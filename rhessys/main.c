@@ -294,7 +294,7 @@
 
 // The $$RHESSYS_VERSION$$ string will be replaced by the make
 // script to reflect the current RHESSys version.
-const char RHESSYS_VERSION[] = "5.14.3";
+const char RHESSYS_VERSION[] = "5.20.1";
 
 /*--------------------------------------------------------------*/
 /*	Main line of code.											*/

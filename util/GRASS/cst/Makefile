@@ -4,7 +4,7 @@ CC  = gcc
 # grassIO should be refactored into its own location in the source tree 
 CFPATH = ../../../cf
 CFLAGS = -g -O0 -I$(GISBASE)/include -I$(CFPATH)/include
-RHESSYS_BIN = /usr/local/bin
+RHESSYS_BIN = /e/code/Hydro/RHESSys/bin
 
 OBJECTS = cst.o grassio.o
 
