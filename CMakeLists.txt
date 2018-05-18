@@ -28,7 +28,7 @@ IF (INSTALL_PREFIX)
 ELSEIF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     SET(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR}/bin CACHE PATH "Set default install path" FORCE)
 ENDIF ()
-SET(PROJECT_BINARY_DIR ${CMAKE_INSTALL_PREFIX})
+SET(INSTALL_DIR ${CMAKE_INSTALL_PREFIX})
 
 ### In case of Makefiles if the user does not setup CMAKE_BUILD_TYPE, assume it's Release.
 IF(CMAKE_GENERATOR MATCHES "Makefiles|Ninja" AND "${CMAKE_BUILD_TYPE}" STREQUAL "")
@@ -36,6 +36,9 @@ IF(CMAKE_GENERATOR MATCHES "Makefiles|Ninja" AND "${CMAKE_BUILD_TYPE}" STREQUAL 
 ENDIF()
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -std=c99")
+
+### Detect compiler and target platform architecture.
+INCLUDE(Utils)
 
 ### Add subdirectories.
 ADD_SUBDIRECTORY(./cf)
@@ -96,6 +99,6 @@ ENDIF()
 
 ### Auxiliary.
 STATUS("")
-STATUS("  Install path:" ${PROJECT_BINARY_DIR})
+STATUS("  Install path:" ${INSTALL_DIR})
 STATUS("")
 
