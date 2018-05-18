@@ -1,10 +1,35 @@
 VERSION = 5.20.1
 PGM  = rhessys$(VERSION)
 CC = gcc 
+INCLUDES = -Iinclude
 #CFLAGS = -O -std=c99
 CFLAGS =-Wall -g -std=c99
 RHESSYS_BIN = /usr/local/bin
 OBJ = objects
+
+# Retro fitting from CF
+ifeq ($(OS), Darwin)
+	CFLAGS_TESTS = `pkg-config --cflags glib-2.0` -g -Wall -Wmacro-redefined -std=c99
+else ifeq ($(OS), Linux)
+	CFLAGS_TESTS = `pkg-config --cflags glib-2.0` -g -Wall -std=c99
+else
+	CFLAGS_TESTS = `pkg-config --cflags glib-2.0` -g -Wall -std=c99
+endif
+
+LDLIBS_TESTS = `pkg-config --libs glib-2.0` -lm
+
+SRCS := $(shell find clim cn cycle hydro init rad tec util -name '*.c')
+OBJDIR := OBJ
+
+TESTS_ROOTDIR = test
+SRCDIR_TESTS = $(TESTS_ROOTDIR)/src
+SRCS_TESTS := $(shell find $(SRCDIR_TESTS) -name '*.c')
+TESTSDIR = $(TESTS_ROOTDIR)
+OBJDIR_TESTS = $(TESTS_ROOTDIR)/objects
+OBJECTS_TESTS := $(patsubst $(SRCDIR_TESTS)/%.c,$(OBJDIR_TESTS)/%.o,$(SRCS_TESTS))
+TESTS := $(patsubst $(SRCDIR_TESTS)/%.c,$(OBJDIR_TESTS)/%,$(SRCS_TESTS))
+TESTS_TO_RUN = $(shell find $(TESTS_ROOTDIR) -type f -perm +111 -maxdepth 1)
+
 
 ifneq ($(OS), Windows_NT)
 	OS := $(shell uname)
@@ -76,6 +101,7 @@ $(OBJ)/compute_ra_understory.o \
 $(OBJ)/compute_radiative_fluxes.o \
 $(OBJ)/compute_rain_stored.o \
 $(OBJ)/compute_return_flow.o \
+$(OBJ)/compute_saturation_vapor_pressure.o \
 $(OBJ)/compute_varbased_returnflow.o \
 $(OBJ)/compute_varbased_flow.o \
 $(OBJ)/compute_snow_stored.o \
@@ -90,6 +116,7 @@ $(OBJ)/compute_subsurface_temperature_profile.o \
 $(OBJ)/compute_toc_wind.o \
 $(OBJ)/compute_transmissivity_curve.o \
 $(OBJ)/compute_unsat_zone_drainage.o \
+$(OBJ)/compute_vapor_pressure_deficit.o \
 $(OBJ)/compute_vapour_conductance.o \
 $(OBJ)/compute_vascular_stratum_conductance.o \
 $(OBJ)/compute_year_day.o \
@@ -195,7 +222,7 @@ $(OBJ)/leaf_conductance_tavg_curve.o \
 $(OBJ)/leaf_conductance_tmin_curve.o \
 $(OBJ)/leaf_conductance_vpd_curve.o \
 $(OBJ)/main.o \
-$(OBJ)/output_24hours_basin.o \
+$(OBJ)/output_basin.o \
 $(OBJ)/output_stream_routing.o \
 $(OBJ)/output_basin_state.o \
 $(OBJ)/output_canopy_strata_state.o \
@@ -306,15 +333,15 @@ ifneq ($(OBJ), $(wildcard $(OBJ)))
 endif
 else
 	mkdir -p $(OBJ)
-endif
+	mkdir -p $(OBJDIR_TESTS)
 
 ifdef netcdf
 ifdef wmfire
 rhessys: $(OBJECTS)
-	$(CC) $(OBJECTS) $(CFLAGS) -I include -lm -lnetcdf -L./lib -lwmfire -v -o $(PGM)
+	$(CC) $(OBJECTS) $(CFLAGS) -I include -lm -L/usr/local/lib -lnetcdf -L./lib -lwmfire -v -o $(PGM) 
 else
 rhessys: $(OBJECTS)
-	$(CC) $(OBJECTS) $(CFLAGS) -I include -lm -lnetcdf -v -o $(PGM)
+	$(CC) $(OBJECTS) $(CFLAGS) -I include -lm -L/usr/local/lib -lnetcdf -v -o $(PGM) 
 endif
 else
 ifdef wmfire
@@ -325,6 +352,27 @@ rhessys: $(OBJECTS)
 	$(CC) $(OBJECTS) $(CFLAGS) -I include -lm -L./lib -v -o $(PGM)
 endif
 endif
+
+# For debugging purposes; usage: make print-NAMEOFMAKEVARIABLE
+print-%  : ; @echo $* = $($*)
+
+OBJECTS_NO_MAIN := $(patsubst $(OBJ)/main.o,,$(OBJECTS))
+test: dir $(TESTS)
+	# Run each unit test
+	$(patsubst %,%;,$(TESTS_TO_RUN))
+	
+$(TESTS): $(OBJECTS_NO_MAIN) $(OBJECTS_TESTS) 
+ifeq ($(OS), Darwin)
+	$(CC) $(OBJECTS_NO_MAIN) $@.o $(CFLAGS_TESTS) $(INCLUDES) $(LDLIBS_TESTS) -o $@
+else ifeq ($(OS), Linux)
+	$(CC) $(OBJECTS_NO_MAIN) $@.o $(CFLAGS_TESTS) $(INCLUDES) $(LDLIBS_TESTS) -lbsd -o $@
+else
+	$(CC) $(OBJECTS_NO_MAIN) $@.o $(CFLAGS_TESTS) $(INCLUDES) $(LDLIBS_TESTS) -o $@
+endif
+	cp $@ $(TESTS_ROOTDIR)
+
+$(OBJDIR_TESTS)/%.o: $(SRCDIR_TESTS)/%.c
+	$(CC) $(CFLAGS_TESTS) $(INCLUDES) -c -o $@ $< 
 
 $(OBJ)/alloc.o: util/alloc.c
 	$(CC) -c $(CFLAGS) -I include util/alloc.c -o $(OBJ)/alloc.o
@@ -423,8 +471,8 @@ $(OBJ)/construct_clim_sequence.o: init/construct_clim_sequence.c
 	$(CC) -c $(CFLAGS) -I include init/construct_clim_sequence.c -o $(OBJ)/construct_clim_sequence.o
 $(OBJ)/construct_dated_clim_sequence.o: init/construct_dated_clim_sequence.c
 	$(CC) -c $(CFLAGS) -I include init/construct_dated_clim_sequence.c -o $(OBJ)/construct_dated_clim_sequence.o
-$(OBJ)/output_24hours_basin.o: output/output_24hours_basin.c
-	$(CC) -c $(CFLAGS) -I include output/output_24hours_basin.c -o $(OBJ)/output_24hours_basin.o
+$(OBJ)/output_basin.o: output/output_basin.c
+	$(CC) -c $(CFLAGS) -I include output/output_basin.c -o $(OBJ)/output_basin.o
 $(OBJ)/output_growth_patch.o: output/output_growth_patch.c
 	$(CC) -c $(CFLAGS) -I include output/output_growth_patch.c -o $(OBJ)/output_growth_patch.o
 $(OBJ)/output_growth_basin.o: output/output_growth_basin.c
@@ -669,6 +717,8 @@ $(OBJ)/compute_nonvascular_stratum_conductance.o: hydro/compute_nonvascular_stra
 	$(CC) -c $(CFLAGS) -I include hydro/compute_nonvascular_stratum_conductance.c -o $(OBJ)/compute_nonvascular_stratum_conductance.o
 $(OBJ)/compute_vascular_stratum_conductance.o: hydro/compute_vascular_stratum_conductance.c
 	$(CC) -c $(CFLAGS) -I include hydro/compute_vascular_stratum_conductance.c -o $(OBJ)/compute_vascular_stratum_conductance.o
+$(OBJ)/compute_vapor_pressure_deficit.o: hydro/compute_vapor_pressure_deficit.c
+	$(CC) -c $(CFLAGS) -I include hydro/compute_vapor_pressure_deficit.c -o $(OBJ)/compute_vapor_pressure_deficit.o
 $(OBJ)/compute_vapour_conductance.o: hydro/compute_vapour_conductance.c
 	$(CC) -c $(CFLAGS) -I include hydro/compute_vapour_conductance.c -o $(OBJ)/compute_vapour_conductance.o
 $(OBJ)/compute_toc_wind.o: clim/compute_toc_wind.c
@@ -707,6 +757,8 @@ $(OBJ)/compute_varbased_flow.o: hydro/compute_varbased_flow.c
 	$(CC) -c $(CFLAGS) -I include hydro/compute_varbased_flow.c -o $(OBJ)/compute_varbased_flow.o
 $(OBJ)/compute_return_flow.o: hydro/compute_return_flow.c
 	$(CC) -c $(CFLAGS) -I include hydro/compute_return_flow.c -o $(OBJ)/compute_return_flow.o
+$(OBJ)/compute_saturation_vapor_pressure.o: hydro/compute_saturation_vapor_pressure.c
+	$(CC) -c $(CFLAGS) -I include hydro/compute_saturation_vapor_pressure.c -o $(OBJ)/compute_saturation_vapor_pressure.o
 $(OBJ)/compute_snow_sublimation.o: hydro/compute_snow_sublimation.c
 	$(CC) -c $(CFLAGS) -I include hydro/compute_snow_sublimation.c -o $(OBJ)/compute_snow_sublimation.o
 $(OBJ)/compute_capillary_rise.o: hydro/compute_capillary_rise.c
@@ -937,7 +989,8 @@ ifeq ($(OS), Windows_NT)
 	rmdir /s $(OBJECTS)
 else
 	rm -f $(OBJECTS)
-endif
+	rm -f $(OBJDIR_TESTS)/*
+	rm -f $(TESTS_TO_RUN)
 
 clobber:
 ifeq ($(OS), Windows_NT)
@@ -947,6 +1000,6 @@ else
 	rm -f $(OBJECTS) $(PGM)
 endif
 
-functest: $(PGM)
+functest: rhessys
 	# Run Python-based functional testing
 	RHESSYS_BIN=$(PGM) python -m unittest discover -s test

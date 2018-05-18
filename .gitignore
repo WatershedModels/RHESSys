@@ -18,3 +18,5 @@ bin/
 
 # CLion metadata
 .idea
+
+.Rproj.user
