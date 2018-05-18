@@ -1,3 +1,7 @@
+Revised RHESSys - The Regional Hydro-Ecologic Simulation System
+===============================================================
+Please see [README-ZHULJ.md](README-ZHULJ.md) for more information!
+
 RHESSys - The Regional Hydro-Ecologic Simulation System
 =======================================================
 
