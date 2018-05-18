@@ -16,7 +16,8 @@ bin/
 # Editor leftovers
 *~
 
-# CLion metadata
+# CLion
 .idea
+cmake-build*
 
 .Rproj.user
