@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 2.8.4)
 project(cf)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -std=c99")
-set(SOURCE_DIR "e:/code/Hydro/RHESSys/cf")
+# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -std=c99")
+# set(SOURCE_DIR "e:/code/Hydro/RHESSys/cf")
 set(SRCDIR src)
 AUX_SOURCE_DIRECTORY(./${SRCDIR} SRCS)
 set(TESTS_ROOTDIR test)
@@ -14,6 +14,6 @@ set(OBJDIR objects)
 file(MAKE_DIRECTORY ${DOCDIR})
 file(MAKE_DIRECTORY ${OBJDIR})
 file(MAKE_DIRECTORY ${OBJDIR_TESTS})
-set(PROJECT_BINARY_DIR "e:/code/Hydro/RHESSys/bin")
+# set(PROJECT_BINARY_DIR "e:/code/Hydro/RHESSys/bin")
 add_custom_target(cf COMMAND mingw32-make -C ${SOURCE_DIR}
                          RHESSYS_BIN=${PROJECT_BINARY_DIR})
